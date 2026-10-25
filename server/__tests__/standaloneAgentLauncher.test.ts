@@ -10,6 +10,7 @@ import { JSONL_POLL_INTERVAL_MS } from '../src/constants.js';
 import { claudeProvider } from '../src/providers/hook/claude/claude.js';
 import type { IPty, PtyModule, PtySpawnOptions } from '../src/terminal/ptyModule.js';
 import { PtySessionManager } from '../src/terminal/ptySessionManager.js';
+import { resolveSpawnCommand } from '../src/terminal/resolveCommand.js';
 import { launchStandaloneAgent } from '../src/terminal/standaloneAgentLauncher.js';
 
 /**
@@ -127,7 +128,9 @@ describe('launchStandaloneAgent', () => {
     // The real claude launch command, spawned in the requested cwd.
 
     expect(harness.spawnArgs).toHaveLength(1);
-    expect(harness.spawnArgs[0].file).toBe('claude');
+    expect(harness.spawnArgs[0].file).toBe(
+      resolveSpawnCommand('claude', harness.spawnArgs[0].options.env),
+    );
     expect(harness.spawnArgs[0].args).toEqual(['--session-id', agent?.sessionId]);
     expect(harness.spawnArgs[0].options.cwd).toBe(cwd);
     expect(harness.manager.has(1)).toBe(true);

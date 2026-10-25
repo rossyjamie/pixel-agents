@@ -24,6 +24,7 @@ import {
 } from '../constants.js';
 import type { IPty, PtyModule } from './ptyModule.js';
 import { resolvePtyModule } from './ptyModule.js';
+import { resolveSpawnCommand } from './resolveCommand.js';
 
 export interface CreatePtySessionOptions {
   agentId: number;
@@ -340,7 +341,7 @@ function spawnPty(
   }
   Object.assign(env, options.env ?? {}, { TERM: TERMINAL_TERM_NAME });
 
-  return module.spawn(options.command, options.args, {
+  return module.spawn(resolveSpawnCommand(options.command, env), options.args, {
     name: TERMINAL_TERM_NAME,
     cols,
     rows,

@@ -134,6 +134,12 @@ export const TERMINAL_DEFAULT_COLS = 80;
 export const TERMINAL_DEFAULT_ROWS = 24;
 /** TERM value exported into the PTY. */
 export const TERMINAL_TERM_NAME = 'xterm-256color';
+/** PATHEXT to search when the environment has none (Windows' own default set). */
+export const WINDOWS_DEFAULT_PATHEXT = '.COM;.EXE;.BAT;.CMD';
+/** Per-user bin folder, relative to %USERPROFILE%, searched after PATH on
+ *  Windows. Claude Code's native installer puts claude.exe here and appends it
+ *  to the END of the user PATH. */
+export const WINDOWS_USER_BIN_SEGMENTS = ['.local', 'bin'] as const;
 /** Grace period between SIGHUP and SIGKILL when disposing a PTY. */
 export const TERMINAL_KILL_GRACE_MS = 2_000;
 /** How long shutdown waits past the SIGKILL escalation for the exits to land. */
